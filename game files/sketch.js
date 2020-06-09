@@ -34,19 +34,18 @@ function drawClock(hours, mins, seconds) {
     ellipseMode(CENTER);
     ellipse(width / 2, height / 2, diameter);
 
-    let secondsAngle = map(seconds, 0, 60, 0, 2 * PI) - PI / 2;
-    secondsLine = diameter / 2 - 40;
-    line(x, y, x + secondsLine * cos(secondsAngle), y + secondsLine * sin(secondsAngle));
+    drawHand(seconds, 60, 40, [255]);
 
     mins += map(seconds, 0, 60, 0, 1);
-    let minutesAngle = map(mins, 0, 60, 0, 2 * PI) - PI / 2;
-    stroke(0, 0, 255);
-    minutesLine = diameter / 2 - 60;
-    line(x, y, x + minutesLine * cos(minutesAngle), y + minutesLine * sin(minutesAngle));
+    drawHand(mins, 60, 60, [0, 0, 255]);
 
     hours += map(mins, 0, 60, 0, 1);
-    let hoursAngle = map(hours, 0, 12, 0, 2 * PI) - PI / 2;
-    stroke(255, 0, 0);
-    hoursLine = diameter / 2 - 120;
-    line(x, y, x + hoursLine * cos(hoursAngle), y + hoursLine * sin(hoursAngle));
+    drawHand(hours, 12, 120, [255, 0, 0]);
+}
+
+function drawHand(mapVar, upperLimit, subFactor, colour) {
+    let angle = map(mapVar, 0, upperLimit, 0, 2 * PI) - PI / 2;
+    stroke(...colour);
+    handLength = diameter / 2 - subFactor;
+    line(x, y, x + handLength * cos(angle), y + handLength * sin(angle));
 }
